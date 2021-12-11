@@ -358,6 +358,25 @@ paths:
       security:
         - basicAuth: []
       deprecated: false
+  /store/payments:
+    get:
+      tags:
+        - Store
+      operationId: getPayments
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Payments'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
   /cart:
     get:
       tags:
@@ -948,7 +967,11 @@ definitions:
       shipping:
         type: string
         example: pickup
-        description: тип доставки
+        description: код типа доставки
+      payment:
+        type: string
+        example: cod2
+        description: код типа оплаты
       timeSlot:
         $ref: '#/definitions/TimeSlot'
       fields:
@@ -970,6 +993,9 @@ definitions:
       shipping:
         type: object
         $ref: '#/definitions/Shipping'
+      payment:
+        type: object
+        $ref: '#/definitions/Payment'
       promocode:
         type: string
         example: K0DWBW
@@ -1144,6 +1170,28 @@ definitions:
         type: string
         example: http://mandarin-eda.ru/image/cache/no_image-40x40.png
         description: Иконка изображения статуса
+  Payments:
+    type: object
+    properties:
+      payments:
+        type: array
+        items:
+          $ref: '#/definitions/Payment'
+  Payment:
+    type: object
+    properties:
+      code:
+        type: string
+        example: cod2
+        description: Код типа оплаты
+      name:
+        type: string
+        example: Оплата курьеру картой
+        description: Наименование типа оплаты
+      image:
+        type: string
+        example: http://mandarin-eda.ru/image/cache/no_image-40x40.png
+        description: Иконка типа оплаты
   errorResult:
     type: object
     required:
