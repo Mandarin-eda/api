@@ -475,6 +475,26 @@ paths:
       security:
         - basicAuth: []
       deprecated: false
+  /order/statuses:
+    get:
+      tags:
+        - Order
+      summary: Список возможных статусов заказов
+      operationId: getOrderStatuses
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OrderStatuses'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
   /order/timeslots:
     get:
       tags:
@@ -971,6 +991,10 @@ definitions:
         type: string
         example: Пицца "Пеперони"
         description: Наименование товара
+      image:
+        type: string
+        example: "http://mandarin-eda.ru/image/cache/catalog/zavtraki/17-2-600x600.png"
+        description: Изображение товара для корзины
       quantity:
         type: integer
         example: 2
@@ -1097,6 +1121,29 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/CartProduct'
+  OrderStatuses:
+    type: object
+    properties:
+      statuses:
+        type: array
+        items:
+          $ref: '#/definitions/OrderStatus'
+  OrderStatus:
+    type: object
+    properties:
+      orderStatusId:
+        type: number
+        format: integer
+        example: 3
+        description: ID статуса заказа
+      name:
+        type: string
+        example: Заказ принят
+        description: Название статуса заказа
+      image:
+        type: string
+        example: http://mandarin-eda.ru/image/cache/no_image-40x40.png
+        description: Иконка изображения статуса
   errorResult:
     type: object
     required:
