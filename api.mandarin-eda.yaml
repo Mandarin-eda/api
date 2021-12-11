@@ -1,0 +1,1113 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Mandarin
+host: api.mandarin-eda.ru
+basePath: /v1
+schemes:
+  - https
+tags:
+  - name: Authorization
+    description: Методы для работы с авторизацией
+  - name: Catalog
+    description: Методы для каталогом
+  - name: User
+    description: Методы для работы с пользователями
+  - name: Geo
+    description: Методы работы с местоположением пользователя
+  - name: Address
+    description: Методы работы с адресом пользователя
+  - name: Store
+    description: Методы работы с точкой продаж
+  - name: Cart
+    description: Методы работы с корзиной
+  - name: Order
+    description: Методы работы с заказом
+paths:
+  /auth:
+    post:
+      tags:
+        - Authorization
+      summary: Метод получения авторизационного токена
+      operationId: createToken
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/authToken'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: true
+  /user:
+    get:
+      tags:
+        - User
+      summary: Получение информации о пользователе
+      operationId: getUser
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
+    post:
+      tags:
+        - User
+      summary: Обновление информации о пользователе
+      operationId: setUser
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: false
+          schema:
+            $ref: '#/definitions/UserRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UserResponse'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
+  /user/temp:
+    post:
+      tags:
+        - User
+      summary: Создание временного пользователя
+      operationId: tempUser
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            type: object
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/TempUser'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      deprecated: false
+  /user/check:
+    post:
+      tags:
+        - User
+      summary: Метод проверки телефона
+      description: Отправляет проверочный код на указанный номер телефона
+      operationId: checkUser
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: '#/definitions/CheckUserRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      deprecated: false
+  /user/confirm:
+    post:
+      tags:
+        - User
+      summary: Проверка кода
+      description: Проверка кода и проведение регистрации
+      operationId: confirmUser
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: '#/definitions/ConfirmUserRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UserResponse'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      deprecated: false
+  /geo/cities:
+    post:
+      tags:
+        - Geo
+      summary: Список доступных к выбору городов
+      operationId: cities
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Cities'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      deprecated: false
+  /menu/categories:
+    get:
+      tags:
+        - Catalog
+      operationId: getCategories
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Categories'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+  /menu/products/{categoryId}:
+    get:
+      tags:
+        - Catalog
+      operationId: getProducts
+      parameters:
+        - in: path
+          name: categoryId
+          type: integer
+          required: true
+          description: ID категории
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Products'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+  /menu/stock:
+    post:
+      tags:
+        - Catalog
+      operationId: getStock
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: '#/definitions/StockRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Stock'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
+  /combo:
+    get:
+      tags:
+        - Catalog
+      operationId: getCombo
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Combo'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+  /combo/status:
+    get:
+      tags:
+        - Catalog
+      operationId: comboAvailable
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                enum: [not_available, available]
+                
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
+  /address:
+    get:
+      tags:
+        - Address
+      summary: Получение информации о адресе
+      operationId: getAddress
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Address'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
+    post:
+      tags:
+        - Address
+      summary: Обновление адреса
+      operationId: setAddress
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          description: При смене улицы или номера дома в запросе обязательно должны
+            присутствовать поля street, house, coordinates
+          schema:
+            $ref: '#/definitions/Address'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Address'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
+  /store/status:
+    get:
+      tags:
+        - Store
+      operationId: storeAvailable
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                enum: [not_available, available]
+                
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
+  /cart:
+    get:
+      tags:
+        - Cart
+      summary: Получение текущей корзины
+      operationId: getCart
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CartResponse'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
+    post:
+      tags:
+        - Cart
+      summary: Обновление корзины
+      description: Для удаления товара из корзины необходимо установить quantity на 0
+      operationId: setCart
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: false
+          schema:
+            $ref: '#/definitions/CartRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CartResponse'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
+  /orders:
+    get:
+      tags:
+        - Order
+      summary: Получение списка заказов
+      operationId: getOrders
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: page
+          type: integer
+          description: Пагинация страниц
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OrderResponse'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
+  /order:
+    post:
+      tags:
+        - Order
+      summary: Создание заказа
+      operationId: createOrder
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: false
+          schema:
+            $ref: '#/definitions/OrderRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Order'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
+  /order/last:
+    get:
+      tags:
+        - Order
+      summary: Информация о последнем заказе клиента
+      operationId: getLastOrder
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Order'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
+  /order/timeslots:
+    get:
+      tags:
+        - Order
+      summary: Список интервалов для выбора
+      operationId: getTimeSlots
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/TimeSlots'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
+securityDefinitions:
+  basicAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+  Bearer:
+    type: basic
+definitions:
+  authToken:
+    type: object
+    required:
+      - expiresAt
+      - token
+    properties:
+      expiresAt:
+        type: string
+        example: '2020-02-18T13:37:36.000Z'
+        description: дата окончания срока жизни токена
+      token:
+        type: string
+        example: 181210f8f9c779c26da1d9b2075bde0127302ee0e3fca38c9a83f5b1dd8e5d3b
+        description: значение токена
+  CheckUserRequest:
+    type: object
+    required:
+      - telephone
+    properties:
+      telephone:
+        type: string
+        example: 79999999999
+  ConfirmUserRequest:
+    type: object
+    required:
+      - telephone
+      - code
+    properties:
+      telephone:
+        type: string
+        example: 79999999999
+      code:
+        type: string
+        example: 42354
+  CheckUserResponse:
+    type: object
+    properties:
+      status:
+        type: string
+        example: new_user
+  Cities:
+    type: object
+    required:
+      - cities
+    properties:
+      cities:
+        type: array
+        items:
+          type: string
+          example: Казань
+  Address:
+    type: object
+    properties:
+      city:
+        type: string
+        example: Казань
+        description: Город
+      street:
+        type: string
+        example: улица Вишневского
+        description: Улица
+      coordinates:
+        type: object
+        properties:
+          lat:
+            type: string
+            example: 55.79062
+            description: latitude
+          lon:
+            type: string
+            example: 49.108112
+            description: longitude
+      house:
+        type: string
+        maximum: 100
+        example: 14Б
+        description: Дом
+      entrance:
+        type: string
+        maximum: 10
+        example: 1
+        description: Имя
+      floor:
+        type: string
+        maximum: 10
+        example: 2
+        description: Имя
+      apartment:
+        type: string
+        maximum: 100
+        example: 30А
+        description: Имя
+      code:
+        type: string
+        maximum: 10
+        example: 2242
+        description: Имя
+      comment:
+        type: string
+        example: Домофон не работает
+        description: Комментарий
+  User:
+    type: object
+    required:
+      - userId
+      - email
+      - telephone
+      - firstname
+      - reward
+    properties:
+      email:
+        type: string
+        example: test@test.ru
+        description: Email
+      telephone:
+        type: string
+        example: 79999999999
+        description: телефон пользователя
+      firstname:
+        type: string
+        example: Иван
+        description: Имя
+      reward:
+        type: integer
+        example: 456
+        description: кол-во баллов на балансе
+      orderCount:
+        type: integer
+        example: 5
+        description: кол-во заказов
+  TempUser:
+    type: object
+    required:
+      - telephone
+      - password
+    properties:
+      telephone:
+        type: string
+        example: ge9w23rfFOEfjhd
+        description: телефон пользователя
+      password:
+        type: string
+        example: gjdgh38904fgv
+        description: Пароль
+  UserRequest:
+    type: object
+    properties:
+      email:
+        type: string
+        example: test@test.ru
+        description: Email
+      telephone:
+        type: string
+        example: 79999999999
+        description: телефон пользователя
+      firstname:
+        type: string
+        example: Иван
+        description: Имя
+      code:
+        type: string
+        example: 23424
+        description: Код подтверждения при смене номера телефона
+      onesignal_player_id:
+        type: string
+        format: uuid
+        example: kfdlg34tg-fkodg-23rfdskgkmre-32rfd
+        description: id из onesignal
+  UserResponse:
+    type: object
+    properties:
+      error:
+        type: string
+        enum:
+          - Данный телефон уже зарегистрирован
+      message:
+        type: string
+        enum:
+          - Код подтверждения отправлен на ваш номер
+  Combo:
+    type: object
+    properties:
+      kit_id:
+        type: string
+        example: 1
+        description: ID Набора
+      product_id:
+        type: string
+        example: 477
+        description: ID товара
+      name:
+        type: string
+        example: Завтрак + Обед
+        description: Название кобо
+      price:
+        type: number
+        format: float
+        example: 899
+        description: Цена за комбо набор
+      shipping_price:
+        type: number
+        format: float
+        example: 49
+        description: Цена доставки
+      breakfast:
+        type: object
+        $ref: '#/definitions/ComboItem'
+      lunch:
+        type: object
+        $ref: '#/definitions/ComboItem'
+      dinner:
+        type: object
+        $ref: '#/definitions/ComboItem'
+  ComboItem:
+    type: object
+    properties:
+      products:
+        type: array
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              product_id:
+                type: string
+                example: 477
+                description: ID товара
+  Categories:
+    type: object
+    properties:
+      categories:
+        type: array
+        items:
+          $ref: '#/definitions/Category'
+  Products:
+    type: object
+    properties:
+      products:
+        type: array
+        items:
+          $ref: '#/definitions/Product'
+  Category:
+    type: object
+    required:
+      - id
+      - parentId
+      - name
+      - image
+      - description
+      - color
+    properties:
+      id:
+        type: string
+        example: 43
+        description: ID категории
+      parentId:
+        type: string
+        example: 22
+        description: ID родительской категории
+      name:
+        type: string
+        example: Пицца
+        description: Наименование категории
+      image:
+        type: string
+        example: https://mandarin-eda/catalog/stikery/polufabrikati.svg
+        description: ссылка на изображение категории
+      description:
+        type: string
+        example: null
+        description: Описание категории
+      color:
+        type: string
+        example: '#38a236'
+        description: Цвет категории в формате HEX
+      template:
+        type: string
+        enum:
+          - base
+          - minimal
+          - collaboration
+  Product:
+    type: object
+    properties:
+      id:
+        type: string
+        example: 242
+        description: ID товара
+      categoryId:
+        type: string
+        example: 22
+        description: ID родительской категории
+      image:
+        type: string
+        example: http://mandarin.ru/image/cache/no_image-600x600.png
+        description: Изображение товара
+      stiker:
+        type: object
+        properties:
+          title:
+            type: string
+            example: Новинка недели!
+            description: Текст стикера
+          image:
+            type: string
+            example: http://mandarin.ru/image/cache/no_image-600x600.png
+            description: Изображение стикера
+      name:
+        type: string
+        example: Пицца "Маргарита"
+        description: Наименование товара
+      description:
+        type: string
+        example: Соус помодорро, сыр моцарелла, сыр чеддар, фарш из телятины, лук
+          красный, салат айсберг, соус гриль, кунжут
+        description: Описание товара
+      price:
+        type: number
+        format: float
+        example: 449
+        description: Цена товара
+      oldPrice:
+        type: number
+        format: float
+        example: Старая цена на товар
+      weight:
+        $ref: '#/definitions/Attribute'
+      attributes:
+        type: array
+        items:
+          $ref: '#/definitions/AttributeGroup'
+  AttributeGroup:
+    type: object
+    properties:
+      name:
+        type: string
+        example: Энергетическая ценность
+        description: Наименование группы атрибутов
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/Attribute'
+  Attribute:
+    type: object
+    properties:
+      name:
+        type: string
+        example: Вес
+        description: Название атрибута
+      value:
+        type: number
+        format: float
+        example: 8.4
+        description: кол-во
+      unit:
+        type: string
+        example: г
+        description: Единица измерения
+  StockRequest:
+    type: object
+    properties:
+      productIds:
+        type: array
+        items:
+          type: string
+  Stock:
+    type: object
+    properties:
+      products:
+        type: array
+        items:
+          type: object
+          properties:
+            productId:
+              type: string
+              example: 242
+              description: ID товара
+            quantity:
+              type: integer
+              example: 999
+              description: Доступный остаток товара
+  CartFields:
+    type: object
+    properties:
+      code:
+        type: string
+        example: reward
+        description: Название checkbox поля
+      value:
+        type: boolean
+        example: false
+        description: Значение поля
+      name:
+        type: string
+        example: Доступно 245 баллов
+        description: Описание поля
+      title:
+        type: string
+        example: Вы можете передать нашему курьеру контейнеры с предыдущего заказа.
+          Контейнеры принимаем в чистом состоянии.
+  CartFieldsRequest:
+    type: object
+    properties:
+      code:
+        type: string
+        example: reward
+        description: Название checkbox поля
+      value:
+        type: boolean
+        example: false
+        description: Значение поля
+  CartRequest:
+    type: object
+    properties:
+      products:
+        type: array
+        items:
+          $ref: '#/definitions/CartProductRequest'
+      promocode:
+        type: string
+        example: K0DWBW
+        description: Промокод
+      shipping:
+        type: string
+        example: pickup
+        description: тип доставки
+      timeSlot:
+        $ref: '#/definitions/TimeSlot'
+      fields:
+        type: array
+        items:
+          $ref: '#/definitions/CartFieldsRequest'
+  CartResponse:
+    type: object
+    properties:
+      products:
+        type: array
+        items:
+          $ref: '#/definitions/CartProduct'
+      total:
+        type: number
+        format: float
+        example: 966
+        description: Сумма заказа
+      shipping:
+        type: object
+        $ref: '#/definitions/Shipping'
+      promocode:
+        type: string
+        example: K0DWBW
+        description: Промокод
+      timeSlot:
+        $ref: '#/definitions/TimeSlot'
+      fields:
+        type: array
+        items:
+          $ref: '#/definitions/CartFields'
+  CartProduct:
+    type: object
+    properties:
+      productId:
+        type: integer
+        example: 432
+        description: ID товара
+      name:
+        type: string
+        example: Пицца "Пеперони"
+        description: Наименование товара
+      quantity:
+        type: integer
+        example: 2
+        description: количество товара в корзине
+      gift:
+        type: boolean
+        example: false
+        description: Признак товара добавленного в подарок
+      price:
+        type: number
+        format: float
+        example: 449
+        description: Цена товара
+  CartProductRequest:
+    type: object
+    properties:
+      cartId:
+        type: integer
+        example: 1
+        description: ID позиции в корзине
+      productId:
+        type: integer
+        example: 432
+        description: ID товара
+      quantity:
+        type: integer
+        example: 2
+        description: количество товара в корзине
+      products: 
+        type: array
+        items:
+          type: string
+        example: ["432", "453", "4453"]
+        description: список выбранных товаров для комбо
+  Shipping:
+    type: object
+    properties:
+      price:
+        type: number
+        format: float
+        example: 89
+        description: стоимость доставки
+      toFree:
+        type: number
+        format: float
+        example: 70
+        description: сколько не хватает до бесплатной
+      minTotal:
+        type: number
+        format: float
+        example: 999
+        description: минимальная сумма заказа
+  TimeSlots:
+    type: array
+    items:
+      $ref: '#/definitions/TimeSlot'
+  TimeSlot:
+    type: object
+    properties:
+      from:
+        type: string
+        format: date-time
+        example: "2017-07-21T17:32:28Z"
+        description: Время от
+      to:
+        type: string
+        format: date-time
+        example: "2017-07-21T17:32:28Z"
+        description: Время до
+  OrderRequest:
+    type: object
+    properties:
+      create:
+        type: boolean
+        example: true
+  OrderResponse:
+    type: object
+    properties:
+      orders:
+        type: array
+        items:
+          $ref: '#/definitions/Order'
+      countOrders:
+        type: integer
+        example: 88
+        description: Количество заказов у клиента
+      page:
+        type: integer
+        example: 2
+        description: Пагинация страниц
+  Order:
+    type: object
+    required:
+      - orderId
+      - total
+      - createDate
+      - deliveryDate
+      - status
+      - products
+    properties:
+      orderId:
+        type: string
+        example: 34295
+        description: ID заказа
+      total:
+        type: number
+        format: float
+        description: Сумма заказа
+      createDate:
+        type: string
+        format: date-time
+        example: '2021-10-01T17:32:28.000Z'
+        description: Дата создания заказа
+      deliveryDate:
+        type: string
+        format: date-time
+        example: '2021-10-01T17:32:28.000Z'
+        description: Дата доставки заказа
+      status:
+        type: string
+        example: Готовится
+        description: Статус заказа
+      products:
+        type: array
+        items:
+          $ref: '#/definitions/CartProduct'
+  errorResult:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: string
+        example: SomeBusinessError
+        description: код ошибки, все коды ошибок должны быть в едином стиле
+      message:
+        type: string
+        example: Property Example is not valid, should be less than billion
+        description: сообщение об ошибке
