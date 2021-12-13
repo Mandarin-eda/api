@@ -664,6 +664,13 @@ definitions:
         type: string
         example: Иван
         description: Имя
+      referal:
+        type: object
+        properties:
+          code:
+            type: string
+            example: D83DWD
+            description: Код реферала для участия в реферальной программе
       reward:
         type: integer
         example: 456
@@ -1125,6 +1132,25 @@ definitions:
         type: string
         example: 34295
         description: ID заказа
+      payment:
+        type: object
+        properties:
+          name: 
+            type: string
+            example: Оплата курьеру картой
+            description: Название типа оплаты для заказа
+          card:
+            type: string
+            example: 430000******0777
+            description: Номер карты для онлайн оплаты
+          image:
+            type: string
+            example: http://mandarin-eda.ru/image/mastercard.png
+            description: Иконка платежной системы
+      address:
+        type: string
+        example: Петербургская 52
+        description: Адрес в заказе
       total:
         type: number
         format: float
