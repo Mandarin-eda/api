@@ -979,6 +979,11 @@ definitions:
         type: string
         example: cod2
         description: код типа оплаты
+      cutlery:
+        type: number
+        format: integer
+        example: 2
+        description: Количество столовых приборов в заказе
       timeSlot:
         $ref: '#/definitions/TimeSlot'
       fields:
@@ -1007,6 +1012,11 @@ definitions:
         type: string
         example: K0DWBW
         description: Промокод
+      cutlery:
+        type: number
+        format: integer
+        example: 2
+        description: Количество столовых приборов в заказе
       timeSlot:
         $ref: '#/definitions/TimeSlot'
       fields:
@@ -1173,6 +1183,10 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/CartProduct'
+      paymentUrl:
+        type: string
+        example: https://securepay.tinkoff.ru/new/3534gerg
+        description: Url для оплаты при внешней оплате
   OrderStatuses:
     type: object
     properties:
