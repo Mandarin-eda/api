@@ -423,6 +423,22 @@ paths:
       security:
         - basicAuth: []
       deprecated: false
+  /cart/related:
+    get:
+      tags:
+        - Cart
+      operationId: getRelated
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Products'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
   /orders:
     get:
       tags:
