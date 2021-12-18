@@ -695,6 +695,10 @@ definitions:
         type: integer
         example: 5
         description: кол-во заказов
+      onesignalPlayerId:
+        type: string
+        example: 
+        description: ID юзера в onesignal
   TempUser:
     type: object
     required:
