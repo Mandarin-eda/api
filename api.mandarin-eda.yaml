@@ -84,7 +84,7 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/UserResponse'
+            $ref: '#/definitions/User'
         '400':
           description: Error
           schema:
@@ -160,7 +160,7 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/UserResponse'
+            $ref: '#/definitions/User'
         '400':
           description: Error
           schema:
@@ -258,7 +258,9 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/Combo'
+            type: array
+            items:
+              $ref: '#/definitions/Combo'
         '400':
           description: Error
           schema:
@@ -659,6 +661,10 @@ definitions:
         type: string
         example: Домофон не работает
         description: Комментарий
+      isAvailablePickup:
+        type: boolean
+        example: true
+        description: доступен ли самовывоз
   User:
     type: object
     required:
