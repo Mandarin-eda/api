@@ -1232,6 +1232,10 @@ definitions:
         type: string
         example: Заказ принят
         description: Название статуса заказа
+      percent:
+        type: integer
+        example: 40
+        description: процент заливки
       image:
         type: string
         example: http://mandarin-eda.ru/image/cache/no_image-40x40.png
