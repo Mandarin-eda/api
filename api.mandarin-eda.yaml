@@ -276,12 +276,7 @@ paths:
         '200':
           description: OK
           schema:
-            type: object
-            properties:
-              status:
-                type: string
-                enum: [not_available, available]
-                
+            $ref: '#/definitions/ComboStatus'
         '400':
           description: Error
           schema:
@@ -705,6 +700,10 @@ definitions:
         type: string
         example: 
         description: ID юзера в onesignal
+      isTemp:
+        type: boolean
+        example: false
+        description: является ли юзер временным
   TempUser:
     type: object
     required:
@@ -802,6 +801,25 @@ definitions:
                 type: string
                 example: 477
                 description: ID товара
+  ComboStatus:
+    type: object
+    properties:
+      status:
+        type: string
+        enum: [not_available, available]
+      minPrice:
+        type: number
+        format: float
+        example: 349
+        description: цена в превью наборов товара
+      title: 
+        type: string
+        example: Бизнес ланчи
+        description: название пункта меню
+      description:
+        type: string
+        example: Бизнес ланчи.
+        description: текст в превью наборов товара
   Categories:
     type: object
     properties:
