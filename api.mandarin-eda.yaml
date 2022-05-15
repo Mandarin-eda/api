@@ -507,6 +507,63 @@ paths:
       security:
         - basicAuth: []
       deprecated: false
+  /order/{orderId}:
+    get:
+      tags:
+        - Order
+      summary: Информация о заказе клиента
+      operationId: getOrder
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: orderId
+          type: integer
+          required: true
+          description: ID заказа
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Order'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
+  /orders/{orderId}/review:
+    post:
+      tags:
+        - Order
+      summary: сохранение отзыва
+      operationId: setReview
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: orderId
+          type: integer
+          required: true
+          description: ID заказа
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: '#/definitions/ReviewRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Order'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
   /order/statuses:
     get:
       tags:
@@ -540,6 +597,28 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/TimeSlots'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
+  /orders/tags:
+    get:
+      tags:
+        - Order
+      summary: Список активных тегов для отзыва
+      operationId: getTags
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Review'
         '400':
           description: Error
           schema:
@@ -1227,6 +1306,8 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/CartProduct'
+      review:
+        $ref: '#/definitions/OrderReview'
       paymentUrl:
         type: string
         example: https://securepay.tinkoff.ru/new/3534gerg
@@ -1280,6 +1361,55 @@ definitions:
         type: string
         example: http://mandarin-eda.ru/image/cache/no_image-40x40.png
         description: Иконка типа оплаты
+  ReviewRequest:
+    type: object
+    properties:
+      rating:
+        type: number
+        example: 4
+        description: Оценка заказа
+      description:
+        type: string
+        example: Все было супер, заказ приехал очень быстро!
+        description: Отзыв о заказе
+      tags:
+        type: array
+        items:
+          type: number
+          example: 3
+          description: ID тега
+  OrderReview:
+    type: object
+    properties:
+      rating:
+        type: number
+        example: 4
+        description: Оценка заказа
+      description:
+        type: string
+        example: Все было супер, заказ приехал очень быстро!
+        description: Отзыв о заказе
+      tags:
+        type: array
+        items:
+          type: string
+          example: грубый курьер
+          description: теги отзыва
+  Review:
+    type: object
+    properties:
+      id:
+        type: number
+        example: 1
+        description: ID тега
+      text:
+        type: string
+        example: опоздали с доставкой
+        description: текст тега
+      status:
+        type: number
+        example: 1
+        description: статус
   errorResult:
     type: object
     required:
