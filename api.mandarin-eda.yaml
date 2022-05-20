@@ -23,6 +23,8 @@ tags:
     description: Методы работы с корзиной
   - name: Order
     description: Методы работы с заказом
+  - name: Config
+    description: Информация
 paths:
   /auth:
     post:
@@ -619,6 +621,26 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Review'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
+  /config:
+    get:
+      tags:
+        - Config
+      summary: Список активных тегов для отзыва
+      operationId: getConfig
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Config'
         '400':
           description: Error
           schema:
@@ -1410,6 +1432,55 @@ definitions:
         type: number
         example: 1
         description: статус
+  Config:
+    type: object
+    properties:
+      version:
+        type: string
+        description: ""
+      logo:
+        type: string
+        description: ""
+      title:
+        type: string
+        description: ""
+      description:
+        type: string
+        description: ""
+      keywords:
+        type: string
+        description: ""
+      phone:
+        type: string
+        description: ""
+      email:
+        type: string
+        description: ""
+      workTime:
+        type: string
+        description: ""
+      header:
+        type: object
+        description: ""
+      footer:
+        type: object
+        description: ""
+      company:
+        type: object
+        description: ""
+      socials:
+        type: array
+        items:
+          type: string
+      privacyPolicy:
+        type: string
+        description: "Ссылка на политику конфидециальности"
+      publicOffer:
+        type: string
+        description: "Ссылка на публичную оферту"
+      cutleryImage:
+        type: string
+        description: ""
   errorResult:
     type: object
     required:
