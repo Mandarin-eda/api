@@ -21,8 +21,8 @@ tags:
     description: Методы работы с точкой продаж
   - name: Cart
     description: Методы работы с корзиной
-  - name: Order
-    description: Методы работы с заказом
+  - name: Orders
+    description: Методы работы с заказами
   - name: Config
     description: Информация
 paths:
@@ -441,7 +441,7 @@ paths:
   /orders:
     get:
       tags:
-        - Order
+        - Orders
       summary: Получение списка заказов
       operationId: getOrders
       produces:
@@ -463,10 +463,9 @@ paths:
       security:
         - basicAuth: []
       deprecated: false
-  /order:
     post:
       tags:
-        - Order
+        - Orders
       summary: Создание заказа
       operationId: createOrder
       produces:
@@ -489,10 +488,10 @@ paths:
       security:
         - basicAuth: []
       deprecated: false
-  /order/last:
+  /orders/last:
     get:
       tags:
-        - Order
+        - Orders
       summary: Информация о последнем заказе клиента
       operationId: getLastOrder
       produces:
@@ -509,10 +508,10 @@ paths:
       security:
         - basicAuth: []
       deprecated: false
-  /order/{orderId}:
+  /orders/{orderId}:
     get:
       tags:
-        - Order
+        - Orders
       summary: Информация о заказе клиента
       operationId: getOrder
       produces:
@@ -538,7 +537,7 @@ paths:
   /orders/{orderId}/review:
     post:
       tags:
-        - Order
+        - Orders
       summary: сохранение отзыва
       operationId: setReview
       produces:
@@ -566,10 +565,10 @@ paths:
       security:
         - basicAuth: []
       deprecated: false
-  /order/statuses:
+  /orders/statuses:
     get:
       tags:
-        - Order
+        - Orders
       summary: Список возможных статусов заказов
       operationId: getOrderStatuses
       produces:
@@ -586,10 +585,10 @@ paths:
       security:
         - basicAuth: []
       deprecated: false
-  /order/timeslots:
+  /orders/timeslots:
     get:
       tags:
-        - Order
+        - Orders
       summary: Список интервалов для выбора
       operationId: getTimeSlots
       produces:
@@ -609,7 +608,7 @@ paths:
   /orders/tags:
     get:
       tags:
-        - Order
+        - Orders
       summary: Список активных тегов для отзыва
       operationId: getTags
       produces:
