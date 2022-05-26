@@ -23,6 +23,8 @@ tags:
     description: Методы работы с корзиной
   - name: Orders
     description: Методы работы с заказами
+  - name: News
+    description: Новости
   - name: Config
     description: Информация
 paths:
@@ -640,6 +642,52 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/Config'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
+  /news:
+    get:
+      tags:
+        - News
+      summary: Список активных тегов для отзыва
+      operationId: newsList
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/NewsResponse'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
+      security:
+        - basicAuth: []
+      deprecated: false
+  /news/viewed:
+    post:
+      tags:
+        - News
+      summary: Список активных тегов для отзыва
+      operationId: viewedNews
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: '#/definitions/ViewNewsRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
         '400':
           description: Error
           schema:
@@ -1480,6 +1528,39 @@ definitions:
       cutleryImage:
         type: string
         description: ""
+  NewsResponse:
+    type: object
+    properties:
+      news:
+        type: array
+        items:
+          $ref: '#/definitions/News'
+  News:
+    type: object
+    properties:
+      title:
+        type: string
+        description: Заголовок новости
+      description:
+        type: string
+        description: Описание новости
+      url:
+        type: string
+        description: Ссылка для кнопки - нет ссылки нет кнопки
+      promocode:
+        type: string
+        description: Промокод - есть промокод есть кнопка - при клике скопировать
+      image:
+        type: string
+        description: Ссылка на изображени
+  ViewNewsRequest:
+    type: object
+    required: 
+      - newsId
+    properties:
+      newsId:
+        type: number
+        description: Ид новости которую закрываем
   errorResult:
     type: object
     required:
