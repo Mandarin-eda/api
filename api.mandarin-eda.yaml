@@ -508,7 +508,7 @@ paths:
       security:
         - basicAuth: []
       deprecated: false
-  /orders/{orderId}:
+  /orders/{orderId}/get:
     get:
       tags:
         - Orders
