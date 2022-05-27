@@ -633,7 +633,7 @@ paths:
     get:
       tags:
         - Config
-      summary: Список активных тегов для отзыва
+      summary: Различная информация
       operationId: getConfig
       produces:
         - application/json
@@ -646,8 +646,6 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/errorResult'
-      security:
-        - basicAuth: []
       deprecated: false
   /news/list:
     get:
