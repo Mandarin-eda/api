@@ -1379,6 +1379,9 @@ definitions:
         type: string
         example: https://securepay.tinkoff.ru/new/3534gerg
         description: Url для оплаты при внешней оплате
+      receiptUrl:
+        type: string
+        description: Ссылка на кассовый чек
   OrderStatuses:
     type: object
     properties:
