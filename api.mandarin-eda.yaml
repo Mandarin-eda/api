@@ -649,7 +649,7 @@ paths:
       security:
         - basicAuth: []
       deprecated: false
-  /news:
+  /news/list:
     get:
       tags:
         - News
