@@ -226,6 +226,28 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/errorResult'
+  /menu/product/{productId}:
+    get:
+      tags:
+        - Catalog
+      operationId: getProduct
+      parameters:
+        - in: path
+          name: productId
+          type: string
+          required: true
+          description: ID товара
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Product'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/errorResult'
   /menu/stock:
     post:
       tags:
