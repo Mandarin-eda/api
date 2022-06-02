@@ -831,12 +831,16 @@ definitions:
   User:
     type: object
     required:
-      - userId
+      - id
       - email
       - telephone
       - firstname
       - reward
     properties:
+      id:
+        type: string
+        format: uuid
+        description: id пользователя в формате uuid
       email:
         type: string
         example: test@test.ru
