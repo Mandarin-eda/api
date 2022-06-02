@@ -832,12 +832,16 @@ definitions:
     type: object
     required:
       - id
+      - uuid
       - email
       - telephone
       - firstname
       - reward
     properties:
       id:
+        type: number
+        description: id пользователя (устарел)
+      uuid:
         type: string
         format: uuid
         description: id пользователя в формате uuid
