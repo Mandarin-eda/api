@@ -1569,6 +1569,9 @@ definitions:
   News:
     type: object
     properties:
+      id:
+        type: number
+        description: ID новости
       title:
         type: string
         description: Заголовок новости
