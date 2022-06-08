@@ -1581,6 +1581,14 @@ definitions:
       url:
         type: string
         description: Ссылка для кнопки - нет ссылки нет кнопки
+      color:
+        type: string
+        example: "#ffffff"
+        description: Цвет новости
+      fontColor:
+        type: string
+        example: "#ffffff"
+        description: Цвет текста
       promocode:
         type: string
         description: Промокод - есть промокод есть кнопка - при клике скопировать
