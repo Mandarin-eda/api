@@ -1461,6 +1461,11 @@ definitions:
         type: string
         example: http://mandarin-eda.ru/image/cache/no_image-40x40.png
         description: Иконка типа оплаты
+      acessibles:
+        type: array
+        items:
+          type: string
+          example: flat
   ReviewRequest:
     type: object
     properties:
@@ -1531,6 +1536,9 @@ definitions:
       phone:
         type: string
         description: ""
+      hasChat:
+        type: boolean
+        description: "Статус модуля чата"
       email:
         type: string
         description: ""
